@@ -326,7 +326,11 @@ uint8_t W5100Class::init(uint8_t socketNumbers, uint8_t new_ss_pin)
 
   CH_SIZE = 0x0100; // Default except W6100
 
-  pCUR_SPI->begin();
+  #if defined(PIN_SCK) && defined(PIN_MISO) && defined(PIN_MOSI)
+    pCUR_SPI->begin(PIN_SCK, PIN_MISO, PIN_MOSI, -1);
+  #else
+    pCUR_SPI->begin();
+  #endif
 
   initSS();
   resetSS();
