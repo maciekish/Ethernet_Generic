@@ -214,9 +214,13 @@ W5100Class W5100;
     #warning ETHERNET_GENERIC_USING_SPI2 in w5100_Impl.h
   #endif
 
+  #ifndef SPI_BUS
+    #define SPI_BUS HSPI
+  #endif
+
   #if defined(ESP32)
-    SPIClass SPI2(HSPI);
-    SPIClass* pCUR_SPI = &SPI2;
+    SPIClass CustomSPI(SPI_BUS);
+    SPIClass* pCUR_SPI = &CustomSPI;
   #elif (ETHERNET_USE_RPIPICO && !defined(ARDUINO_ARCH_MBED))
     // For arduino-pico core
     // SPIClassRP2040(spi_inst_t *spi, pin_size_t rx, pin_size_t cs, pin_size_t sck, pin_size_t tx);
